@@ -57,7 +57,7 @@ public:
     head = nullptr;
   };
 
-  void traverseList()
+  void readList()
   {
     Node *current = head; // Pointer to the head node
 
@@ -112,51 +112,114 @@ public:
     current->next = newNode;
   }
 
-  void deleteAtBegining() {
-    if (isListEmpty()) {
+  void deleteAtBegining()
+  {
+    if (isListEmpty())
+    {
       return;
     }
 
-    Node* temp = head;
+    Node *temp = head;
     head = head->next;
     delete temp;
   }
 
-  void deleteAtEnd() {
+  void deleteAtEnd()
+  {
     /**
      * EXAMPLE:
      * each of these addresses (e.g. 0x100) hold a node with a value and an address pointing to the node after it
-     * 
+     *
      * We want to get the node at address 0x200 (second last node)
      * Free and reclaim the memory of the node next to it (address 0x300)
      * Make the pointer pointing to 0x200's next null so it doesn't point to dead memory
-     * 
+     *
      * head
      *  ↓
      * 0x100: [10 | 0x200]
      * 0x200: [20 | 0x300]
      * 0x300: [30 | null]
-     * 
+     *
      */
 
-    if (isListEmpty()) {
+    if (isListEmpty())
+    {
       return;
     }
 
     // If there is only one node
-    if (head->next == nullptr) {
-      delete head; // Free memory allocated to head
+    if (head->next == nullptr)
+    {
+      delete head;    // Free memory allocated to head
       head = nullptr; // Avoid pointing to dead/freed memory
       return;
     }
 
-    Node* current = head;
-    
-    while(current->next->next != nullptr) {
+    Node *current = head;
+
+    while (current->next->next != nullptr)
+    {
       current = current->next;
     }
 
     delete current->next;
     current->next = nullptr;
+  }
+
+  void insertAtPosition(int value, int position)
+  {
+    /**
+     *
+     * The following mock data follows this pattern:
+     *    Node Pointer: <value, Next node pointer>
+     *
+     * DATA:
+     * head -> 0x100: <10, 0x200>
+     *         0x200: <20, 0x300>
+     *         0x300: <30, 0x400>
+     *         0x400: <40, null>
+     *
+     * putting them in a linked list will result in the following visualization:
+     * LIST: [0x100 -> 0x200 -> 0x300 -> 0x400 -> null]
+     *
+     * Assuming the list starts at position zero
+     * We'll try inserting at position 2 (after 0x200)
+     *
+     * The operation will result in the following list
+     * RESULT: [0x100 -> 0x200 -> 0x500 -> 0x300 -> 0x400 -> null]
+     *
+     */
+
+    if (position == 0 || head == nullptr)
+    {
+      insertAtBegining(value);
+      return;
+    }
+
+    if (position == -1)
+    {
+      insertAtEnd(value);
+      return;
+    }
+
+    Node *current = head;
+
+    for (int i = 0; i < position - 1; i++)
+    {
+      if (current->next != nullptr)
+      {
+        current = current->next;
+      }
+      else
+      {
+        // we reached the end of the list
+        // position exceeds the length of the list
+        return;
+      }
+    }
+
+    Node *newNode = new Node(value);
+    newNode->next = current->next;
+    current->next = newNode;
   }
 };
