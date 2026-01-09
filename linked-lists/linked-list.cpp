@@ -59,6 +59,10 @@ public:
 
   void readList()
   {
+    if (isListEmpty()) {
+      cout << "List is empty" << endl;
+    }
+
     Node *current = head; // Pointer to the head node
 
     // While the reference current node points to is not null
@@ -190,7 +194,7 @@ public:
      *
      */
 
-    if (position == 0 || head == nullptr)
+    if (position == 0 || isListEmpty())
     {
       insertAtBegining(value);
       return;
@@ -222,4 +226,9 @@ public:
     newNode->next = current->next;
     current->next = newNode;
   }
+};
+
+int main() {
+  cout << "Linked list" << endl;
+  return 0;
 };
