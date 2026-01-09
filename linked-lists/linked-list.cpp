@@ -46,6 +46,11 @@ class LinkedList
 private:
   Node *head; // Head holds the memory address of a node that is head
 
+  bool isListEmpty()
+  {
+    return head == nullptr;
+  }
+
 public:
   LinkedList()
   {
@@ -77,7 +82,7 @@ public:
      */
     Node *newNode = new Node(value);
 
-    if (head == nullptr)
+    if (isListEmpty())
     {
       head = newNode;
       return;
@@ -85,5 +90,25 @@ public:
 
     newNode->next = head;
     head = newNode;
+  }
+
+  void insertAtEnd(int value)
+  {
+    Node *newNode = new Node(value);
+
+    if (isListEmpty())
+    {
+      head = newNode;
+      return;
+    }
+
+    Node *current = head;
+
+    while (current->next != nullptr)
+    {
+      current = current->next;
+    }
+
+    current->next = newNode;
   }
 };
