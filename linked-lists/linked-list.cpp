@@ -5,7 +5,7 @@ using namespace std;
 struct Node
 {
   int value;
-  Node *next; // 0x100->next X
+  Node* next; // 0x100
 };
 
 class LinkedList
