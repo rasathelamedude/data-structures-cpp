@@ -111,4 +111,52 @@ public:
 
     current->next = newNode;
   }
+
+  void deleteAtBegining() {
+    if (isListEmpty()) {
+      return;
+    }
+
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+  }
+
+  void deleteAtEnd() {
+    /**
+     * EXAMPLE:
+     * each of these addresses (e.g. 0x100) hold a node with a value and an address pointing to the node after it
+     * 
+     * We want to get the node at address 0x200 (second last node)
+     * Free and reclaim the memory of the node next to it (address 0x300)
+     * Make the pointer pointing to 0x200's next null so it doesn't point to dead memory
+     * 
+     * head
+     *  ↓
+     * 0x100: [10 | 0x200]
+     * 0x200: [20 | 0x300]
+     * 0x300: [30 | null]
+     * 
+     */
+
+    if (isListEmpty()) {
+      return;
+    }
+
+    // If there is only one node
+    if (head->next == nullptr) {
+      delete head; // Free memory allocated to head
+      head = nullptr; // Avoid pointing to dead/freed memory
+      return;
+    }
+
+    Node* current = head;
+    
+    while(current->next->next != nullptr) {
+      current = current->next;
+    }
+
+    delete current->next;
+    current->next = nullptr;
+  }
 };
