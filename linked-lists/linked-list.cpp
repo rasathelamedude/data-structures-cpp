@@ -57,9 +57,69 @@ public:
     head = nullptr;
   };
 
+  ~LinkedList()
+  {
+    /**
+     * The annotation ~ClassName() {...} is called a destructor
+     *
+     * As the name suggests, much like how a constructor executes when an instance of the class is created
+     * The destructor function runs when that instance is deleted, acting as clean up of memory
+     *
+     * WHY:
+     * The reason a destructor is important in the case of our linked list is illustrated in the following example
+     *
+     * EXAMPLE:
+     * Consider the following code
+     *
+     * void test() {
+     *  LinkedList list;
+     *  list.insertAtBegining(10);
+     *  list.insertAtEnd(20);
+     * }
+     *
+     * once this function executes right before it ends the memory layout looks like this
+     *
+     * STACK:
+     *  list: head -> 0x100 -> 0x200 -> null
+     * HEAP:
+     *  0x100 Node(10);
+     *  0x200 Node(20);
+     *
+     * When test() ends stack gets cleaned up so the list object is destroyed and the head pointer is gone with it
+     * But the Nodes inside the heap still remain and are uncreachable since the pointers are gone
+     *
+     * STACK:
+     *  EMPTY
+     * HEAP:
+     *  0x100 Node(10);
+     *  0x200 Node(20);
+     *
+     * RESULT: This eventually results in memory leak ()
+     */
+
+    if (isListEmpty())
+    {
+      return;
+    }
+
+    Node *current = head;
+
+    while (current->next != nullptr)
+    {
+      Node *temp = current;
+      current = current->next;
+
+      delete temp;
+    }
+
+    // delete last node
+    delete current;
+  }
+
   void readList()
   {
-    if (isListEmpty()) {
+    if (isListEmpty())
+    {
       cout << "List is empty" << endl;
     }
 
@@ -226,9 +286,20 @@ public:
     newNode->next = current->next;
     current->next = newNode;
   }
+
+  // TODO:
+  // int getAt(int position) {}
+  // int getSize() {}
+  // void clear() {}
+  // int getFirst() {}
+  // int getLast() {}
+  // void deleteAtPosition(int position) {}
+  // void deleteByValue(int value) {}
+  // void reverse() {}
 };
 
-int main() {
+int main()
+{
   cout << "Linked list" << endl;
   return 0;
 };
