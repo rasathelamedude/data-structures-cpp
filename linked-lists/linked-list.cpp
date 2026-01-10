@@ -288,8 +288,47 @@ public:
   }
 
   // TODO:
-  // int getAt(int position) {}
-  // int getSize() {}
+  int getSize()
+  {
+    if (isListEmpty())
+      return 0;
+
+    int counter = 0;
+    Node *current = head;
+
+    while (current != nullptr)
+    {
+      counter++;
+      current = current->next;
+    }
+
+    return counter;
+  }
+
+  int getAt(int position)
+  {
+    if (isListEmpty())
+    {
+      cout << "List is empty" << endl;
+      return -1;
+    };
+
+    Node *current = head;
+
+    for (int i = 0; i < position; i++)
+    {
+      if (current->next == nullptr)
+      {
+        cout << "Position exceeds list size" << endl;
+        return -1;
+      }
+
+      current = current->next;
+    }
+
+    return current->value;
+  }
+
   // void clear() {}
   // int getFirst() {}
   // int getLast() {}
