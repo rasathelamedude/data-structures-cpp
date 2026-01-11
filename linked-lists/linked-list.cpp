@@ -46,7 +46,7 @@ class LinkedList
 private:
   Node *head; // Head holds the memory address of a node that is head
 
-  bool isListEmpty()
+  bool isListEmpty() const
   {
     return head == nullptr;
   }
@@ -100,7 +100,7 @@ public:
     clearList();
   }
 
-  void readList()
+  void printList()
   {
     if (isListEmpty())
       return;
@@ -108,7 +108,7 @@ public:
     Node *current = head; // Pointer to the head node
 
     // While the reference current node points to is not null
-    while (current->next != nullptr)
+    while (current != nullptr)
     {
       cout << current->value << endl;
       current = current->next;
@@ -160,12 +160,7 @@ public:
 
   void deleteAtBegining()
   {
-    if (isListEmpty())
-      return;
-
-    Node *temp = head;
-    head = head->next;
-    delete temp;
+    deleteAtPosition(0);
   }
 
   void deleteAtEnd()
@@ -186,26 +181,7 @@ public:
      *
      */
 
-    if (isListEmpty())
-      return;
-
-    // If there is only one node
-    if (head->next == nullptr)
-    {
-      delete head;    // Free memory allocated to head
-      head = nullptr; // Avoid pointing to dead/freed memory
-      return;
-    }
-
-    Node *current = head;
-
-    while (current->next->next != nullptr)
-    {
-      current = current->next;
-    }
-
-    delete current->next;
-    current->next = nullptr;
+    deleteAtPosition(getSize() - 1);
   }
 
   void insertAtPosition(int value, int position)
@@ -254,8 +230,9 @@ public:
       }
       else
       {
-        // we reached the end of the list
-        // position exceeds the length of the list
+        // We reached the end of the list
+        // Insert at the end
+        insertAtEnd(value);
         return;
       }
     }
@@ -265,7 +242,7 @@ public:
     current->next = newNode;
   }
 
-  int getSize()
+  int getSize() const
   {
     if (isListEmpty())
       return 0;
@@ -282,7 +259,7 @@ public:
     return counter;
   }
 
-  int getAt(int position)
+  int getAt(int position) const
   {
     if (isListEmpty())
       return -1;
@@ -320,9 +297,12 @@ public:
 
     // delete last node
     delete current;
+
+    // reset head to null
+    head = nullptr;
   }
 
-  int getFirst()
+  int getFirst() const
   {
     if (isListEmpty())
       return -1;
@@ -330,9 +310,9 @@ public:
     return head->value;
   }
 
-  int getLast()
+  int getLast() const
   {
-    if (isListEmpty)
+    if (isListEmpty())
       return -1;
 
     Node *current = head;
@@ -346,9 +326,58 @@ public:
   }
 
   void deleteAtPosition(int position)
+  /**
+   *
+   * ACCESSING THE PREVIOUS NODE IN A SINGLY LINKED LIST
+   *
+   * Since we're implementing a singly linked list
+   * Nodes don't have access to their previous node
+   * The way we access the previous node is by maintaining two pointers that traverse the list together.
+   *
+   * PATTERN:
+   * Node* current = head;
+   * Node* previous = nullptr;
+   *
+   * // During traversal:
+   * previous = current;      // Move previous to where current is
+   * current = current->next; // Move current one step forward
+   *
+   * EXAMPLE:
+   * Consider deleting the node at position 2 (value 30) from this list:
+   *
+   * head -> 0x100: <10, 0x200> -> 0x200: <20, 0x300> -> 0x300: <30, 0x400> -> 0x400: <40, null>
+   *
+   * Initial state (position 0):
+   *   previous: nullptr
+   *   current:  0x100 (value: 10)
+   *
+   * After first iteration (position 1):
+   *   previous: 0x100 (value: 10)  ← previous = current (was 0x100)
+   *   current:  0x200 (value: 20)  ← current = current->next (moved to 0x200)
+   *
+   * After second iteration (position 2):
+   *   previous: 0x200 (value: 20)  ← previous = current (was 0x200)
+   *   current:  0x300 (value: 30)  ← current = current->next (moved to 0x300)
+   *
+   * Now we can delete current (0x300) and reconnect the list:
+   *   previous->next = current->next;  // 0x200's next now points to 0x400
+   *   delete current;                   // Free 0x300
+   *
+   * RESULT: [0x100 -> 0x200 -> 0x400 -> null]
+   *
+   */
+
   {
     if (isListEmpty())
       return;
+
+    if (position == 0)
+    {
+      Node *temp = head;
+      head = head->next;
+      delete temp;
+      return;
+    }
 
     Node *current = head;
     Node *previous = nullptr;
@@ -365,31 +394,28 @@ public:
       current = current->next;
     }
 
-    if (current == head)
-    {
-      head = current->next;
-      delete current;
-      return;
-    }
-
     previous->next = current->next;
     delete current;
   }
 
   void deleteByValue(int value)
   {
-    isListEmpty();
+    if (isListEmpty())
+      return;
 
     Node *current = head;
     Node *previous = nullptr;
 
-    while (current->next != nullptr)
+    while (current != nullptr && current->value != value)
     {
       previous = current;
       current = current->next;
+    }
 
-      if (current->value == value)
-        break;
+    if (current == nullptr || current->value != value)
+    {
+      cout << "Value not found" << endl;
+      return;
     }
 
     if (current == head)
