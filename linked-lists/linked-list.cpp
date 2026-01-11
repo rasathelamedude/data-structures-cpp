@@ -371,42 +371,33 @@ public:
     }
 
     Node *current = head;
-    Node *previousOfCurrent = nullptr;
+    Node *previous = nullptr;
 
     for (int i = 0; i < position; i++)
     {
-      // Store the previous node
-      if (i == (position - 1))
-      {
-        previousOfCurrent = current;
-      }
-
-      // Reaching the position
-      if (current->next != nullptr)
-      {
-        current = current->next;
-      }
-      else
+      if (current->next == nullptr)
       {
         cout << "Position exceeds list size" << endl;
         return;
       }
+
+      previous = current;
+      current = current->next;
     }
 
     if (current == head)
     {
       head = current->next;
       delete current;
+      return;
     }
-    else
-    {
-      previousOfCurrent->next = current->next;
-      delete current;
-    }
+
+    previous->next = current->next;
+    delete current;
   }
 
   // void deleteByValue(int value) {}
-  
+
   // void reverse() {}
 };
 
