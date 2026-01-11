@@ -103,9 +103,7 @@ public:
   void readList()
   {
     if (isListEmpty())
-    {
-      cout << "List is empty" << endl;
-    }
+      return;
 
     Node *current = head; // Pointer to the head node
 
@@ -163,9 +161,7 @@ public:
   void deleteAtBegining()
   {
     if (isListEmpty())
-    {
       return;
-    }
 
     Node *temp = head;
     head = head->next;
@@ -191,9 +187,7 @@ public:
      */
 
     if (isListEmpty())
-    {
       return;
-    }
 
     // If there is only one node
     if (head->next == nullptr)
@@ -291,10 +285,7 @@ public:
   int getAt(int position)
   {
     if (isListEmpty())
-    {
-      cout << "List is empty" << endl;
       return -1;
-    };
 
     Node *current = head;
 
@@ -315,9 +306,7 @@ public:
   void clearList()
   {
     if (isListEmpty())
-    {
       return;
-    }
 
     Node *current = head;
 
@@ -336,10 +325,7 @@ public:
   int getFirst()
   {
     if (isListEmpty())
-    {
-      cout << "List is empty" << endl;
       return -1;
-    }
 
     return head->value;
   }
@@ -347,10 +333,7 @@ public:
   int getLast()
   {
     if (isListEmpty)
-    {
-      cout << "List is empty" << endl;
       return -1;
-    }
 
     Node *current = head;
 
@@ -365,10 +348,7 @@ public:
   void deleteAtPosition(int position)
   {
     if (isListEmpty())
-    {
-      cout << "List is empty!" << endl;
       return;
-    }
 
     Node *current = head;
     Node *previous = nullptr;
@@ -396,7 +376,32 @@ public:
     delete current;
   }
 
-  // void deleteByValue(int value) {}
+  void deleteByValue(int value)
+  {
+    isListEmpty();
+
+    Node *current = head;
+    Node *previous = nullptr;
+
+    while (current->next != nullptr)
+    {
+      previous = current;
+      current = current->next;
+
+      if (current->value == value)
+        break;
+    }
+
+    if (current == head)
+    {
+      head = current->next;
+      delete current;
+      return;
+    }
+
+    previous->next = current->next;
+    delete current;
+  }
 
   // void reverse() {}
 };
