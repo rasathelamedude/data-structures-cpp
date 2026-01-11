@@ -97,23 +97,7 @@ public:
      * RESULT: This eventually results in memory leak ()
      */
 
-    if (isListEmpty())
-    {
-      return;
-    }
-
-    Node *current = head;
-
-    while (current->next != nullptr)
-    {
-      Node *temp = current;
-      current = current->next;
-
-      delete temp;
-    }
-
-    // delete last node
-    delete current;
+    clearList();
   }
 
   void readList()
@@ -287,7 +271,6 @@ public:
     current->next = newNode;
   }
 
-  // TODO:
   int getSize()
   {
     if (isListEmpty())
@@ -328,8 +311,29 @@ public:
 
     return current->value;
   }
+  
+  void clearList()
+  {
+    if (isListEmpty())
+    {
+      return;
+    }
 
-  // void clear() {}
+    Node *current = head;
+
+    while (current->next != nullptr)
+    {
+      Node *temp = current;
+      current = current->next;
+
+      delete temp;
+    }
+
+    // delete last node
+    delete current;
+  }
+  
+  // TODO:
   // int getFirst() {}
   // int getLast() {}
   // void deleteAtPosition(int position) {}
