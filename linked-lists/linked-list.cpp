@@ -362,9 +362,51 @@ public:
     return current->value;
   }
 
-  // TODO:
-  // void deleteAtPosition(int position) {}
+  void deleteAtPosition(int position)
+  {
+    if (isListEmpty())
+    {
+      cout << "List is empty!" << endl;
+      return;
+    }
+
+    Node *current = head;
+    Node *previousOfCurrent = nullptr;
+
+    for (int i = 0; i < position; i++)
+    {
+      // Store the previous node
+      if (i == (position - 1))
+      {
+        previousOfCurrent = current;
+      }
+
+      // Reaching the position
+      if (current->next != nullptr)
+      {
+        current = current->next;
+      }
+      else
+      {
+        cout << "Position exceeds list size" << endl;
+        return;
+      }
+    }
+
+    if (current == head)
+    {
+      head = current->next;
+      delete current;
+    }
+    else
+    {
+      previousOfCurrent->next = current->next;
+      delete current;
+    }
+  }
+
   // void deleteByValue(int value) {}
+  
   // void reverse() {}
 };
 
