@@ -311,7 +311,7 @@ public:
 
     return current->value;
   }
-  
+
   void clearList()
   {
     if (isListEmpty())
@@ -332,10 +332,37 @@ public:
     // delete last node
     delete current;
   }
-  
+
+  int getFirst()
+  {
+    if (isListEmpty())
+    {
+      cout << "List is empty" << endl;
+      return -1;
+    }
+
+    return head->value;
+  }
+
+  int getLast()
+  {
+    if (isListEmpty)
+    {
+      cout << "List is empty" << endl;
+      return -1;
+    }
+
+    Node *current = head;
+
+    while (current->next != nullptr)
+    {
+      current = current->next;
+    }
+
+    return current->value;
+  }
+
   // TODO:
-  // int getFirst() {}
-  // int getLast() {}
   // void deleteAtPosition(int position) {}
   // void deleteByValue(int value) {}
   // void reverse() {}
