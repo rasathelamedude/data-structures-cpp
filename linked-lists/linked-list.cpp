@@ -26,6 +26,7 @@ using namespace std;
  * Node* n = new Node(10);
  *
  * NOTE: The new keyword is not just "create object" but rather "Allocate memory on the heap, construct an object there, and return its address"
+ * 
  */
 
 class Node
@@ -110,9 +111,12 @@ public:
     // While the reference current node points to is not null
     while (current != nullptr)
     {
-      cout << current->value << endl;
+      cout << current->value << " -> ";
+
       current = current->next;
     }; // current->next == (*current).next
+
+    cout << "null\n";
   };
 
   void insertAtBegining(int value)
@@ -429,11 +433,49 @@ public:
     delete current;
   }
 
-  // void reverse() {}
+  void reverse() {
+    /**
+     * 
+     * The way we can go on about this is as follows:
+     * 
+     * Our first job is to make the first node's next reference null without losing reference to the rest of the nodes
+     *    
+     * 
+     */
+
+    if (isListEmpty()) return;
+    
+    Node* previous = nullptr;
+    Node* next = nullptr;
+    
+    while (head != nullptr)
+    {
+      next = head->next;
+      head->next = previous;
+      previous = head;
+      head = next;
+    }
+
+    head = previous;
+  }
 };
 
 int main()
 {
-  cout << "Linked list" << endl;
+  LinkedList list;
+
+  list.insertAtEnd(10);
+  list.insertAtEnd(20);
+  list.insertAtEnd(30);
+  list.insertAtEnd(40);
+
+  cout << "Before reversing :\n";
+  list.printList();
+
+  list.reverse();
+
+  cout << "After reversing :\n";
+  list.printList();
+
   return 0;
 };
