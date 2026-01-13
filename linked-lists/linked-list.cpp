@@ -449,6 +449,7 @@ public:
      *
      * VISUALIZATION:
      * head -> 0x100: <10, 0x200> -> 0x200: <20, 0x300> -> 0x300: <30, 0x400> -> 0x400: <40, null>
+     *
      * Iteration 1:
      * head -> 0x100: <10, 0x200> -> 0x200: <20, 0x300> -> 0x300: <30, 0x400> -> 0x400: <40, null>
      * previous: 0x100
