@@ -26,7 +26,7 @@ using namespace std;
  * Node* n = new Node(10);
  *
  * NOTE: The new keyword is not just "create object" but rather "Allocate memory on the heap, construct an object there, and return its address"
- * 
+ *
  */
 
 class Node
@@ -433,21 +433,55 @@ public:
     delete current;
   }
 
-  void reverse() {
+  void reverse()
+  {
     /**
-     * 
+     *
      * The way we can go on about this is as follows:
-     * 
-     * Our first job is to make the first node's next reference null without losing reference to the rest of the nodes
-     *    
-     * 
+     *
+     * First we need two pointers to keep track of the previous and next nodes
+     * Then we iterate through the list, and for each node we do the following:
+     *
+     * 1. Store the next node (next = head->next)
+     * 2. Reverse the current node's pointer (head->next = previous)
+     * 3. Move the previous and head pointers one step forward (previous = head, head = next)
+     * 4. Finally, after the loop ends, we set head to previous since previous will be at the new head of the reversed list
+     *
+     * VISUALIZATION:
+     * head -> 0x100: <10, 0x200> -> 0x200: <20, 0x300> -> 0x300: <30, 0x400> -> 0x400: <40, null>
+     * Iteration 1:
+     * head -> 0x100: <10, 0x200> -> 0x200: <20, 0x300> -> 0x300: <30, 0x400> -> 0x400: <40, null>
+     * previous: 0x100
+     * current:  0x200
+     *
+     * Iteration 2:
+     * head -> 0x100: <10, 0x200> -> 0x200: <20, 0x300> -> 0x300: <30, 0x400> -> 0x400: <40, null>
+     * previous: 0x200
+     * current:  0x300
+     *
+     * Iteration 3:
+     * head -> 0x100: <10, 0x200> -> 0x200: <20, 0x300> -> 0x300: <30, 0x400> -> 0x400: <40, null>
+     * previous: 0x300
+     * current:  0x400
+     *
+     * Iteration 4:
+     * head -> 0x100: <10, 0x200> -> 0x200: <20, 0x300> -> 0x300: <30, 0x400> -> 0x400: <40, null>
+     * previous: 0x400
+     * current:  null
+     *
+     * head now points to the previous node which is the new head of the reversed list
+     *
+     * RESULT:
+     * head -> 0x400: <40, 0x300> -> 0x300: <30, 0x200> -> 0x200: <20, 0x100> -> 0x100: <10, null>
+     *
      */
 
-    if (isListEmpty()) return;
-    
-    Node* previous = nullptr;
-    Node* next = nullptr;
-    
+    if (isListEmpty())
+      return;
+
+    Node *previous = nullptr;
+    Node *next = nullptr;
+
     while (head != nullptr)
     {
       next = head->next;
