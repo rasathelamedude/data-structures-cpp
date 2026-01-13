@@ -218,9 +218,15 @@ public:
       return;
     }
 
-    if (position == -1)
+    if (position == getSize() - 1)
     {
       insertAtEnd(value);
+      return;
+    }
+
+    if (position >= getSize())
+    {
+      cout << "Position exceeds list size" << endl;
       return;
     }
 
@@ -380,6 +386,12 @@ public:
       Node *temp = head;
       head = head->next;
       delete temp;
+      return;
+    }
+
+    if (position >= getSize())
+    {
+      cout << "Position exceeds list size" << endl;
       return;
     }
 

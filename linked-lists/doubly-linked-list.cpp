@@ -39,6 +39,7 @@ public:
     if (isListEmpty())
     {
       cout << "List is empty" << endl;
+      return;
     }
 
     Node *current = head;
@@ -67,7 +68,7 @@ public:
     return counter;
   }
 
-  void insertAtBegining(int value)
+  void insertAtBeginning(int value)
   {
     /**
      * NOTE: "Node newNode" on the following line will result in an error becuase of type mismatch
@@ -112,13 +113,19 @@ public:
   {
     if (position <= 0 || isListEmpty())
     {
-      insertAtBegining(value);
+      insertAtBeginning(value);
+      return;
+    }
+
+    if (position == getSize() - 1)
+    {
+      insertAtEnd(value);
       return;
     }
 
     if (position >= getSize())
     {
-      insertAtEnd(value);
+      cout << "Position exceeds list size" << endl;
       return;
     }
 
@@ -137,7 +144,7 @@ public:
     current->previous = newNode;
   }
 
-  void deleteAtBegining()
+  void deleteAtBeginning()
   {
     if (isListEmpty())
       return;
@@ -202,13 +209,19 @@ public:
 
     if (position <= 0)
     {
-      deleteAtBegining();
+      deleteAtBeginning();
+      return;
+    }
+
+    if (position == getSize() - 1)
+    {
+      deleteAtEnd();
       return;
     }
 
     if (position >= getSize())
     {
-      deleteAtEnd();
+      cout << "Position exceeds list size" << endl;
       return;
     }
 
