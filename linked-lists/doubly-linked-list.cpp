@@ -24,7 +24,7 @@ private:
 
   bool isListEmpty() const
   {
-    return head == nullptr;
+    return head == nullptr && tail == nullptr;
   }
 
 public:
@@ -44,7 +44,7 @@ public:
 
     Node *current = head;
 
-    while (current->next != nullptr)
+    while (current != nullptr)
     {
       cout << current->value << endl;
       current = current->next;

@@ -3,6 +3,17 @@
 using namespace std;
 
 /**
+ *
+ * Linked lists are fundamental data structures in CS.
+ * They consist of a list of elements called nodes that are linked together through pointers.
+ *
+ * Linked lists allow for efficient insertion and deletion comapred to arrays.
+ * The reason for that is unlike arrays, the elements of a linked list are non-contiguous and can be dynamically allocated or deallocated.
+ * Meaning the elements are scattered throughout memory and are not in adjacent memory locations.
+ *
+ */
+
+/**
  * NOTE: Objects are stored on <stack | heap>
  *
  * Stack is fast scoped memory
