@@ -129,13 +129,78 @@ public:
     current->next = newNode;
   }
 
-  void deleteAtBeginning() {}
+  void deleteAtBeginning()
+  {
+    if (isEmpty())
+      return;
 
-  void deleteAtEnd() {}
+    if (head == tail)
+    {
+      head = nullptr;
+      tail = nullptr;
+    }
+    else
+    {
+      head = head->next;
+      tail->next = head;
+    }
+  }
 
-  void deleteAtPosition(int position) {}
+  void deleteAtEnd()
+  {
+    if (isEmpty())
+      return;
 
-  void printList() {}
+    if (head == tail)
+    {
+      head = nullptr;
+      tail = nullptr;
+    }
+    else
+    {
+      Node *current = head;
+
+      while (current->next != tail)
+      {
+        current = current->next;
+      }
+
+      current->next = head;
+      tail = current;
+    }
+  }
+
+  void deleteAtPosition(int position)
+  {
+    if (position == 0)
+    {
+      deleteAtBeginning();
+    }
+
+    if (position == getSize() - 1)
+    {
+      deleteAtEnd();
+    }
+
+    if (position > getSize())
+    {
+      cout << "Position exceeds list size" << endl;
+    }
+
+    Node *current = head;
+
+    for (int i = 0; i < position - 1; i++)
+    {
+      current = current->next;
+    }
+
+    current->next = current->next->next;
+  }
+
+  void printList() 
+  {
+    
+  }
 
   void reverse() {}
 };
