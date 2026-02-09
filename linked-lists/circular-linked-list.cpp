@@ -197,12 +197,48 @@ public:
     current->next = current->next->next;
   }
 
-  void printList() 
+  void printList()
   {
-    
+    if (isEmpty())
+    {
+      cout << "List is empty" << endl;
+      return;
+    }
+
+    Node *current = head;
+
+    do
+    {
+      cout << current->value << " -> ";
+      current = current->next;
+    } while (current != head);
+
+    cout << head->value << endl;
   }
 
-  void reverse() {}
+  void reverse()
+  {
+    if (isEmpty() || head == tail)
+    {
+      return;
+    }
+
+    Node *previous = tail;
+    Node *current = head;
+    Node *next = head->next;
+
+    do
+    {
+      next = current->next;
+      current->next = previous;
+      previous = current;
+      current = next;
+    } while (current != head);
+
+    Node *temp = head;
+    head = tail;
+    tail = temp;
+  }
 };
 
 int main()
@@ -214,6 +250,12 @@ int main()
   list.insertAtBeginning(30);
 
   list.insertAtPosition(1, 40);
+
+  list.printList();
+
+  list.reverse();
+
+  list.printList();
 
   return 0;
 }
